@@ -8,11 +8,68 @@
     <script defer src="js/app.js"></script>
   </head>
   <body>
-    <h1 id="welcome">Welcome to Blackjack</h1>
-    <div id="table">
-      <h2 id="dealer">Dealer</h2>
+    <div class="box">
+      <div class="table">
+        <h2>Welcome to Blackjack</h2>
+        <table>
+          <tr>
+            <td>
+              Deck
+              <br />
+              <img
+                class="deck"
+                src="card-deck/images/backs/blue.svg"
+                alt="blue-back"
+              />
+            </td>
+            <td id="dealer-card-1">Card 1</td>
+            <td id="dealer-card-2">Card 2</td>
+            <td id="dealer-card-3">Card 3</td>
+            <td id="dealer-card-4">Card 4</td>
+            <td id="dealer-card-5">Card 5</td>
+          </tr>
+          <tr>
+            <td>
+              Empty space <br />
+              <img src="card-deck/images/backs/red.svg" alt="red-back" />
+            </td>
+            <td>Card 1</td>
+            <td>Card 2</td>
+            <td>Card 3</td>
+            <td>Card 4</td>
+            <td>Card 5</td>
+          </tr>
+        </table>
+
+        <div class="buttons">
+          <button class="hit">Hit</button>
+          <button class="stand">Stand</button>
+        </div>
+        <div class="rules">
+          <h2>Rules</h2>
+          <p>
+            Blackjack is a game that involves 2 players. The dealer deals 2
+            cards to himself and the player at the start of the game.
+          </p>
+          <p>
+            The goal is to get to 21 points. The winner is the person who is
+            closest to 21 points. If both players go over 21 points, they both
+            lose.
+          </p>
+          <p>
+            If one person goes over 21 and the other person is under 21, the
+            person under 21 points wins.
+          </p>
+          <p>
+            Jack/Queen/King counts as 10 points. Ace counts as 1 or 11 points
+            depending on the player.
+          </p>
+          <p>
+            The player must decide if they want to hit(gain an additional card)
+            or stand(don't want an additional card to boost their points).
+          </p>
+        </div>
+      </div>
     </div>
-    <button id="hit">Hit</button>
-    <button id="stand">Stand</button>
   </body>
 </html>

@@ -1,18 +1,16 @@
-#table {
-  margin: auto;
-  height: 500px;
-  width: 1200px;
-  background-color: #7bf542;
-  padding: 20px;
-  margin-bottom: 20px;
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #64eb34;
 }
 
-#welcome {
-  text-align: center;
-  color: black;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
-
-#dealer {
-  text-align: center;
+.box {
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+  height: 1000px;
+  width: 800px;
+  border: black;
+  margin: 10px;
 }
