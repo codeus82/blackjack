@@ -3,6 +3,59 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BlackJack</title>
+    <link rel="stylesheet" href="card-deck/css/cardstarter.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <h1>Welcome to Blackjack</h1>
+    <div class="dealer">
+      <h2>Dealer</h2>
+      <div id="dealer-hand"></div>
+      <div class="score">Score</div>
+    </div>
+    <div class="player">
+      <h2>Player</h2>
+      <div id="player-hand"></div>
+      <div class="score">Score</div>
+    </div>
+    <div class="buttons">
+      <button id="hit">Hit</button>
+      <button id="stay">Stay</button>
+    </div>
+    <div class="rules">
+      <h2>Rules</h2>
+      <p>
+        Blackjack is a game that involves 2 players. The dealer deals 2 cards to
+        himself and the player at the start of the game.
+      </p>
+      <p>
+        The goal is to get to 21 points. The winner is the person who is closest
+        to 21 points. If both players go over 21 points, they both lose.
+      </p>
+      <p>
+        If one person goes over 21 and the other person is under 21, the person
+        under 21 points wins.
+      </p>
+      <p>
+        Jack/Queen/King counts as 10 points. Ace counts as 1 or 11 points
+        depending on the player.
+      </p>
+      <p>
+        The player must decide if they want to hit(gain an additional card) or
+        stand(don't want an additional card to boost their points).
+      </p>
+    </div>
+    <script defer src="js/deck.js"></script>
+    <script defer src="js/app.js"></script>
+  </body>
+</html>
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blackjack</title>
     <link rel="stylesheet" href="css/styles.css" />
     <script defer src="js/app.js"></script>
@@ -15,11 +68,7 @@
           <tr>
             <td>
               Deck
-              <br />
-              <img
-                class="deck"
-                src="card-deck/images/backs/blue.svg"
-                alt="blue-back"
+              <input type="text">
               />
             </td>
             <td id="dealer-card-1">Card 1</td>
@@ -72,4 +121,4 @@
       </div>
     </div>
   </body>
-</html>
+</html> -->

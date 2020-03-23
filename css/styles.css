@@ -1,16 +1,35 @@
 body {
-  display: flex;
+  /* display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
   background-color: #64eb34;
 }
 
-.box {
-  /* display: flex; */
-  justify-content: center;
+h1 {
+  text-align: center;
+}
+
+.dealer {
   align-items: center;
-  height: 1000px;
-  width: 800px;
-  border: black;
-  margin: 10px;
+  justify-content: center;
+  text-align: center;
+  height: 300px;
+}
+
+.player {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 300px;
+}
+
+.buttons {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  justify-content: center;
+}
+
+.rules {
+  text-align: center;
 }
