@@ -4,6 +4,8 @@ console.log(deck);
 
 let playerHand = [];
 let dealerHand = [];
+let pscore = 0;
+let dscore = 0;
 
 //Fisher-Yate's algorithm
 function shuffle(deck) {
@@ -18,27 +20,50 @@ function shuffle(deck) {
   }
 }
 
+//gives 2 cards to the dealer and player at the start
 function initialHand() {
   shuffle(deck);
   for (let i = 0; i < 2; i++) {
-    playerHand.push(deck.shift());
-    dealerHand.push(deck.shift());
+    playerHand.push(deck.pop());
+    dealerHand.push(deck.pop());
   }
-  return playerHand;
+  return playerHand, dealerHand;
 }
 
-console.log(playerHand);
+function hit() {
+  playerHand.push(deck.pop());
+}
 
-let firstCard = deck.pop();
+function calculateScore() {
+  let pscore = 0;
+  let dscore = 0;
+  playerHand.forEach(function(card) {
+    pscore += deck.values;
+    return pscore;
+  });
+  dealerHand.forEach(function(card) {
+    dscore += card.values;
+    return dscore;
+  });
+}
 
-let addCard = document.getElementById("dealer-hand");
+function startGame() {
+  initialHand();
+  hit();
+  calculateScore();
+  console.log(playerHand);
+  console.log(pscore);
+}
 
-let hitTest = document.getElementById("hit");
-hitTest.addEventListener("click", function() {
-  console.log("click");
-});
+startGame();
+// let addCard = document.getElementById("dealer-hand");
 
-let stayTest = document.getElementById("stay");
-stayTest.addEventListener("click", function(e) {
-  console.log("clicked");
-});
+// let hitButton = document.getElementById("hit");
+// hitButton.addEventListener("click", function(e) {
+//   hit();
+//   return playerHand;
+// });
+// let stayTest = document.getElementById("stay");
+// stayTest.addEventListener("click", function(e) {
+//   console.log("clicked");
+// });
