@@ -1,11 +1,16 @@
 console.log("Working");
 
-console.log(deck);
-
+const dealer = "Dealer";
+const player = "You";
+const tie = "tie";
 let playerHand = [];
 let dealerHand = [];
-let pscore = 0;
-let dscore = 0;
+let iswinner = null;
+let pScore = 0;
+let dScore = 0;
+function startOfGame() {
+  startGame();
+}
 
 //Fisher-Yate's algorithm
 function shuffle(deck) {
@@ -30,40 +35,83 @@ function initialHand() {
   return playerHand, dealerHand;
 }
 
+//adds a card to the player's hand
 function hit() {
   playerHand.push(deck.pop());
+  render();
+  calculateScore();
+}
+
+function stay() {
+  while (dScore < 18) {
+    dealerHand.push(deck.pop());
+    render();
+  }
+  calculateScore();
 }
 
 function calculateScore() {
-  let pscore = 0;
-  let dscore = 0;
+  let pScore = 0;
+  let dScore = 0;
   playerHand.forEach(function(card) {
-    pscore += deck.values;
-    return pscore;
+    pScore += card.value;
+    document.getElementById("player-score").innerHTML = "Score: " + pScore;
+    return pScore;
   });
   dealerHand.forEach(function(card) {
-    dscore += card.values;
-    return dscore;
+    dScore += card.value;
+    document.getElementById("dealer-score").innerHTML = dScore;
+    return dScore;
   });
+  console.log(pScore);
+  if (pScore > 21 && dScore < 21) {
+    iswinner = dealer;
+    checkForWinner();
+  }
+}
+
+function render() {
+  document.getElementById("dealer-hand").innerHTML = "";
+  dealerHand.forEach(card => {
+    let dealerCards = `<div class="card ${card.face}"></div>`;
+    document.getElementById("dealer-hand").innerHTML += dealerCards;
+  });
+  document.getElementById("player-hand").innerHTML = "";
+  playerHand.forEach(card => {
+    let playerCards = `<div class="card ${card.face}"></div>`;
+    document.getElementById("player-hand").innerHTML += playerCards;
+  });
+  checkForWinner();
+}
+
+// checks for winner
+function checkForWinner() {
+  if (iswinner !== null) {
+    if (iswinner == player) {
+      document.getElementById("winner").innerHTML = "Congrats! You won.";
+    } else if (iswinner == dealer) {
+      document.getElementById("winner").innerHTML = "Sorry, you lost :(";
+    } else {
+      document.getElementById("winner").innerHTML = "It's a tie!";
+    }
+  }
 }
 
 function startGame() {
   initialHand();
-  hit();
+  render();
   calculateScore();
-  console.log(playerHand);
-  console.log(pscore);
+  checkForWinner();
 }
 
 startGame();
-// let addCard = document.getElementById("dealer-hand");
 
-// let hitButton = document.getElementById("hit");
-// hitButton.addEventListener("click", function(e) {
-//   hit();
-//   return playerHand;
-// });
-// let stayTest = document.getElementById("stay");
-// stayTest.addEventListener("click", function(e) {
-//   console.log("clicked");
-// });
+let hitButton = document.getElementById("hit");
+hitButton.addEventListener("click", function(e) {
+  hit();
+});
+
+let stayButton = document.getElementById("stay");
+stayButton.addEventListener("click", function(e) {
+  stay();
+});
