@@ -9,9 +9,9 @@ let dealerHand = [];
 let iswinner = null;
 let pScore = 0;
 let dScore = 0;
-function startOfGame() {
-  startGame();
-}
+// function startOfGame() {
+//   startGame();
+// }
 
 //Fisher-Yate's algorithm
 function shuffle(deck) {
@@ -108,14 +108,28 @@ function checkForWinner() {
       document.getElementById("winner").innerHTML = "It's a tie!";
     }
   }
+  hide();
+  showResetBtn();
 }
 
+//styles the button to be hidden when there is a winner
 function hide() {
   document.getElementById("hit").style.visibility = "hidden";
   document.getElementById("stay").style.visibility = "hidden";
 }
 
+//styles reset button to be hidden when the game is on.
+function hideResetBtn() {
+  document.getElementById("reset").style.visibility = "hidden";
+}
+
+//styles reset button to show when winner is found.
+function showResetBtn() {
+  document.getElementById("reset").style.visibility = "visible";
+}
+
 function startGame() {
+  hideResetBtn();
   initialHand();
   render();
   calculateScore();
@@ -134,4 +148,12 @@ hitButton.addEventListener("click", function(e) {
 let stayButton = document.getElementById("stay");
 stayButton.addEventListener("click", function(e) {
   stay();
+});
+
+let resetButton = document.getElementById("reset");
+resetButton.addEventListener("click", function(e) {
+  let playerHand = [];
+  let dealerHand = [];
+  let iswinner = null;
+  startGame();
 });
