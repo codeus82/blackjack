@@ -66,6 +66,12 @@ function calculateScore() {
 //adds a card to the player's hand
 function hit() {
   playerHand.push(deck.pop());
+  pScore = calculateScore(playerHand);
+  if (pScore > 21) {
+    iswinner = dealer;
+    checkForWinner();
+    document.getElementById("winner").innerHTML = "You busted";
+  }
   // render();
   // calculateScore();
   // checkForWinner();
@@ -74,17 +80,20 @@ function hit() {
 
 //function if player is content with their hand
 function stay() {
-  // while (dScore < 18) {
-  //   dealerHand.push(deck.pop());
-  //   render();
-  // }
+  dScore = calculateScore(dealerHand);
+  while (dScore < 17 && !iswinner) {
+    dealerHand.push(deck.pop());
+    render();
+  }
   checkForWinner();
 }
 
 function render() {
   document.getElementById("dealer-hand").innerHTML = "";
-  dealerHand.forEach(card => {
-    let dealerCards = `<div class="card ${card.face}"></div>`;
+  dealerHand.forEach((card, idx) => {
+    let dealerCards = `<div class="card ${
+      idx === 1 && !iswinner ? "back" : card.face
+    }"></div>`;
     document.getElementById("dealer-hand").innerHTML += dealerCards;
   });
   document.getElementById("player-hand").innerHTML = "";
@@ -92,7 +101,6 @@ function render() {
     let playerCards = `<div class="card ${card.face}"></div>`;
     document.getElementById("player-hand").innerHTML += playerCards;
   });
-  calculateScore();
 }
 
 // checks for winner
@@ -128,6 +136,11 @@ function showResetBtn() {
   document.getElementById("reset").style.visibility = "visible";
 }
 
+function showBtns() {
+  document.getElementById("hit").style.visibility = "visible";
+  document.getElementById("stay").style.visibility = "visible";
+}
+
 function startGame() {
   hideResetBtn();
   initialHand();
@@ -152,8 +165,9 @@ stayButton.addEventListener("click", function(e) {
 
 let resetButton = document.getElementById("reset");
 resetButton.addEventListener("click", function(e) {
-  let playerHand = [];
-  let dealerHand = [];
-  let iswinner = null;
+  playerHand = [];
+  dealerHand = [];
+  iswinner = null;
   startGame();
+  showBtns();
 });
