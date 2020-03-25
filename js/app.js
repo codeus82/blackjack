@@ -3,16 +3,11 @@ console.log("Working");
 const dealer = "Dealer";
 const player = "You";
 const tie = "tie";
-const bust = "bust";
 let playerHand = [];
 let dealerHand = [];
 let iswinner = null;
 let pScore = 0;
 let dScore = 0;
-
-// function startOfGame() {
-//   startGame();
-// }
 
 //Fisher-Yate's algorithm
 function shuffle(deck) {
@@ -57,25 +52,43 @@ function calculateScore(hand) {
 //adds a card to the player's hand
 function hit() {
   playerHand.push(deck.pop());
-  // render();
-  // calculateScore(player);
-  // checkForWinner();
+  pScore = calculateScore(playerHand);
+  if (pScore > 21) {
+    iswinner = dealer;
+    checkForWinner();
+  }
   render();
 }
 
 //function if player is content with their hand
 function stay() {
-  // while (dScore < 18) {
-  //   dealerHand.push(deck.pop());
-  //   render();
-  // }
+  dScore = calculateScore(dealerHand);
+  pScore = calculateScore(playerHand);
+
+  while (dScore < 17 && !iswinner) {
+    dealerHand.push(deck.pop());
+    dScore = calculateScore(dealerHand);
+  }
+  if (dScore > 21) {
+    iswinner = player;
+  } else if (dScore > pScore) {
+    iswinner = dealer;
+  } else if (dScore < pScore) {
+    iswinner = player;
+  } else if (dScore === pScore) {
+    iswinner = tie;
+  }
+  render();
   checkForWinner();
 }
 
+//renders cards
 function render() {
   document.getElementById("dealer-hand").innerHTML = "";
-  dealerHand.forEach(card => {
-    let dealerCards = `<div class="card ${card.face}"></div>`;
+  dealerHand.forEach((card, idx) => {
+    let dealerCards = `<div class="card ${
+      idx === 1 && !iswinner ? "back" : card.face
+    }"></div>`;
     document.getElementById("dealer-hand").innerHTML += dealerCards;
   });
   document.getElementById("player-hand").innerHTML = "";
@@ -83,60 +96,29 @@ function render() {
     let playerCards = `<div class="card ${card.face}"></div>`;
     document.getElementById("player-hand").innerHTML += playerCards;
   });
-  calculateScore(dealerHand);
-  calculateScore(playerHand);
 }
 
 // checks for winner
 function checkForWinner() {
-  dScore = calculateScore(dealerHand);
-  pScore = calculateScore(playerHand);
-  document.getElementById("player-score").innerHTML = "Score: " + pScore;
-  document.getElementById("dealer-score").innerHTML = "Score: " + dScore;
-  if (pScore > 21 && dScore <= 21) {
-    iswinner = dealer;
-  } else if (pScore <= 21 && dScore > 21) {
-    iswinner = player;
-  } else if (pScore === dScore) {
-    iswinner = tie;
-  } else if (pScore <= 21 && dScore <= 21 && pScore < dScore) {
-    iswinner = dealer;
-  } else if (pScore <= 21 && dScore <= 21 && pScore > dScore) {
-    iswinner = player;
-  }
   if (iswinner !== null) {
     if (iswinner == player) {
       document.getElementById("winner").innerHTML = "Congrats! You won.";
-      iswinner = null;
     } else if (iswinner == dealer) {
       document.getElementById("winner").innerHTML = "Sorry, you lost :(";
-      iswinner = null;
-    } else if (iswinner == bust) {
-      document.getElementById("winner").innerHTML = "You both busted";
-      iswinner = null;
-    } else {
-      document.getElementById("winner").innerHTML = "It's a tie!";
-      iswinner = null;
     }
+  } else if (iswinner == tie) {
+    document.getElementById("winner").innerHTML = "It's a tie!";
   }
-  //hide();
+  document.getElementById("player-score").innerHTML = "Score: " + pScore;
+  document.getElementById("dealer-score").innerHTML = "Score: " + dScore;
+  hide();
   showResetBtn();
-}
-
-//clea
-function clearText() {
-  document.getElementById("winner").innerHTML = "";
 }
 
 //styles the button to be hidden when there is a winner
 function hide() {
   document.getElementById("hit").style.visibility = "hidden";
   document.getElementById("stay").style.visibility = "hidden";
-}
-
-function showBtns() {
-  document.getElementById("hit").style.visibility = "visible";
-  document.getElementById("stay").style.visibility = "visible";
 }
 
 //styles reset button to be hidden when the game is on.
@@ -149,12 +131,19 @@ function showResetBtn() {
   document.getElementById("reset").style.visibility = "visible";
 }
 
-function startGame() {
-  iswinner = null;
-  playerHand = [];
-  dealerHand = [];
+//shows hit and stay buttons once player hits reset
+function showBtns() {
+  document.getElementById("hit").style.visibility = "visible";
+  document.getElementById("stay").style.visibility = "visible";
+}
 
-  showBtns();
+//clears the scores of the previous game if player hit reset button
+function clearScores() {
+  document.getElementById("dealer-score").innerHTML = "Score:";
+  document.getElementById("player-score").innerHTML = "Score:";
+}
+
+function startGame() {
   hideResetBtn();
   initialHand();
   render();
@@ -179,6 +168,11 @@ stayButton.addEventListener("click", function(e) {
 
 let resetButton = document.getElementById("reset");
 resetButton.addEventListener("click", function(e) {
-  clearText();
+  document.getElementById("winner").innerHTML = " ";
+  clearScores();
+  playerHand = [];
+  dealerHand = [];
+  iswinner = null;
   startGame();
+  showBtns();
 });
