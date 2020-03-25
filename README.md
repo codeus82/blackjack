@@ -14,9 +14,9 @@ Blackjack is a 2 player game that involves getting to the value 21 as close as p
 
 ## Images
 
-![Game Start](images/blackjack-1.png)
-![Game Won](images/blackjack-2.png)
-![Game Lost](images/blackjack-3.png)
+![Game Start](https://i.imgur.com/g4WsMTP.png)
+![Game Won](https://i.imgur.com/mAdONTh.png)
+![Game Lost](https://i.imgur.com/SQqfCxn.png)
 
 ## Next Steps
 
