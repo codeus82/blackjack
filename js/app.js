@@ -62,10 +62,14 @@ function hit() {
 
 //function if player is content with their hand
 function stay() {
+  console.log(dealerHand);
+  console.log(playerHand);
   dScore = calculateScore(dealerHand);
   pScore = calculateScore(playerHand);
-  while (dScore < 17 && !winner) {
+
+  while (dScore < 17 && !iswinner) {
     dealerHand.push(deck.pop());
+    dScore = calculateScore(dealerHand);
   }
   if (dScore > 21) {
     iswinner = player;
@@ -104,11 +108,9 @@ function checkForWinner() {
       document.getElementById("winner").innerHTML = "Congrats! You won.";
     } else if (iswinner == dealer) {
       document.getElementById("winner").innerHTML = "Sorry, you lost :(";
-    } else if (iswinner == bust) {
-      document.getElementById("winner").innerHTML = "You both busted";
-    } else if (iswinner == tie) {
-      document.getElementById("winner").innerHTML = "It's a tie!";
     }
+  } else if (iswinner == tie) {
+    document.getElementById("winner").innerHTML = "It's a tie!";
   }
   document.getElementById("player-score").innerHTML = "Score: " + pScore;
   document.getElementById("dealer-score").innerHTML = "Score: " + dScore;

@@ -1,10 +1,7 @@
 body {
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
   background-color: #64eb34;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
-
 h1 {
   text-align: center;
 }
