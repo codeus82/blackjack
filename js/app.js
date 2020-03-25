@@ -37,38 +37,30 @@ function initialHand() {
 }
 
 //calculates the score
-function calculateScore() {
-  let pScore = 0;
-  let dScore = 0;
-  playerHand.forEach(function(card) {
-    pScore += card.value;
-    document.getElementById("player-score").innerHTML = "Score: " + pScore;
-    return pScore;
+function calculateScore(hand) {
+  let score = 0;
+  let aces = 0;
+  hand.forEach(function(card) {
+    score += card.value;
+    if (card.value === 11) {
+      aces++;
+    }
   });
-  dealerHand.forEach(function(card) {
-    dScore += card.value;
-    document.getElementById("dealer-score").innerHTML = dScore;
-    return dScore;
-  });
-  // if (pScore > 21 && dScore <= 21) {
-  //   iswinner = dealer;
-  // } else if (pScore <= 21 && dScore > 21) {
-  //   iswinner = player;
-  // } else if (pScore === dScore) {
-  //   iswinner = tie;
-  // } else if (pScore <= 21 && dScore <= 21 && pScore < dScore) {
-  //   iswinner = dealer;
-  // } else if (pScore <= 21 && dScore <= 21 && pScore > dScore) {
-  //   iswinner = player;
-  // }
+  while (score > 21 && aces) {
+    score -= 10;
+    aces--;
+  }
+  return score;
 }
 
 //adds a card to the player's hand
 function hit() {
   playerHand.push(deck.pop());
   pScore = calculateScore(playerHand);
+  console.log(pScore);
   if (pScore > 21) {
     iswinner = dealer;
+    checkForWinner();
   }
   render();
 }
@@ -76,10 +68,8 @@ function hit() {
 //function if player is content with their hand
 function stay() {
   dScore = calculateScore(dealerHand);
-  console.log(dScore);
   pScore = calculateScore(playerHand);
-  console.log(pScore);
-  while (dScore < 17 && !iswinner) {
+  while (dScore < 17 && !winner) {
     dealerHand.push(deck.pop());
   }
   if (dScore > 21) {
@@ -155,7 +145,8 @@ function startGame() {
   hideResetBtn();
   initialHand();
   render();
-  calculateScore();
+  calculateScore(dealerHand);
+  calculateScore(playerHand);
   //checkForWinner();
 }
 
