@@ -50,17 +50,17 @@ function calculateScore() {
     document.getElementById("dealer-score").innerHTML = dScore;
     return dScore;
   });
-  if (pScore > 21 && dScore <= 21) {
-    iswinner = dealer;
-  } else if (pScore <= 21 && dScore > 21) {
-    iswinner = player;
-  } else if (pScore === dScore) {
-    iswinner = tie;
-  } else if (pScore <= 21 && dScore <= 21 && pScore < dScore) {
-    iswinner = dealer;
-  } else if (pScore <= 21 && dScore <= 21 && pScore > dScore) {
-    iswinner = player;
-  }
+  // if (pScore > 21 && dScore <= 21) {
+  //   iswinner = dealer;
+  // } else if (pScore <= 21 && dScore > 21) {
+  //   iswinner = player;
+  // } else if (pScore === dScore) {
+  //   iswinner = tie;
+  // } else if (pScore <= 21 && dScore <= 21 && pScore < dScore) {
+  //   iswinner = dealer;
+  // } else if (pScore <= 21 && dScore <= 21 && pScore > dScore) {
+  //   iswinner = player;
+  // }
 }
 
 //adds a card to the player's hand
@@ -69,22 +69,32 @@ function hit() {
   pScore = calculateScore(playerHand);
   if (pScore > 21) {
     iswinner = dealer;
-    checkForWinner();
-    document.getElementById("winner").innerHTML = "You busted";
   }
-  // render();
-  // calculateScore();
-  // checkForWinner();
   render();
 }
 
 //function if player is content with their hand
 function stay() {
   dScore = calculateScore(dealerHand);
+  console.log(dScore);
+  pScore = calculateScore(playerHand);
+  console.log(pScore);
   while (dScore < 17 && !iswinner) {
     dealerHand.push(deck.pop());
-    render();
   }
+  if (dScore > 21) {
+    iswinner = player;
+  } else if (dScore > pScore) {
+    iswinner = dealer;
+  } else if (dScore < pScore) {
+    iswinner = player;
+  } else if (dScore === pScore) {
+    iswinner = tie;
+  } else if (dScore > 21 && pScore > 21) {
+    iswinner = bust;
+  }
+  console.log(iswinner);
+  render();
   checkForWinner();
 }
 
@@ -112,7 +122,7 @@ function checkForWinner() {
       document.getElementById("winner").innerHTML = "Sorry, you lost :(";
     } else if (iswinner == bust) {
       document.getElementById("winner").innerHTML = "You both busted";
-    } else {
+    } else if (winner == tie) {
       document.getElementById("winner").innerHTML = "It's a tie!";
     }
   }
@@ -165,6 +175,7 @@ stayButton.addEventListener("click", function(e) {
 
 let resetButton = document.getElementById("reset");
 resetButton.addEventListener("click", function(e) {
+  document.getElementById("winner").innerHTML = " ";
   playerHand = [];
   dealerHand = [];
   iswinner = null;
