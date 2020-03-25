@@ -3,15 +3,11 @@ console.log("Working");
 const dealer = "Dealer";
 const player = "You";
 const tie = "tie";
-const bust = "bust";
 let playerHand = [];
 let dealerHand = [];
 let iswinner = null;
 let pScore = 0;
 let dScore = 0;
-// function startOfGame() {
-//   startGame();
-// }
 
 //Fisher-Yate's algorithm
 function shuffle(deck) {
@@ -57,7 +53,6 @@ function calculateScore(hand) {
 function hit() {
   playerHand.push(deck.pop());
   pScore = calculateScore(playerHand);
-  console.log(pScore);
   if (pScore > 21) {
     iswinner = dealer;
     checkForWinner();
@@ -80,14 +75,13 @@ function stay() {
     iswinner = player;
   } else if (dScore === pScore) {
     iswinner = tie;
-  } else if (dScore > 21 && pScore > 21) {
-    iswinner = bust;
   }
   console.log(iswinner);
   render();
   checkForWinner();
 }
 
+//renders cards
 function render() {
   document.getElementById("dealer-hand").innerHTML = "";
   dealerHand.forEach((card, idx) => {
@@ -112,10 +106,12 @@ function checkForWinner() {
       document.getElementById("winner").innerHTML = "Sorry, you lost :(";
     } else if (iswinner == bust) {
       document.getElementById("winner").innerHTML = "You both busted";
-    } else if (winner == tie) {
+    } else if (iswinner == tie) {
       document.getElementById("winner").innerHTML = "It's a tie!";
     }
   }
+  document.getElementById("player-score").innerHTML = "Score: " + pScore;
+  document.getElementById("dealer-score").innerHTML = "Score: " + dScore;
   hide();
   showResetBtn();
 }
@@ -136,9 +132,16 @@ function showResetBtn() {
   document.getElementById("reset").style.visibility = "visible";
 }
 
+//shows hit and stay buttons once player hits reset
 function showBtns() {
   document.getElementById("hit").style.visibility = "visible";
   document.getElementById("stay").style.visibility = "visible";
+}
+
+//clears the scores of the previous game if player hit reset button
+function clearScores() {
+  document.getElementById("dealer-score").innerHTML = "Score:";
+  document.getElementById("player-score").innerHTML = "Score:";
 }
 
 function startGame() {
@@ -167,6 +170,7 @@ stayButton.addEventListener("click", function(e) {
 let resetButton = document.getElementById("reset");
 resetButton.addEventListener("click", function(e) {
   document.getElementById("winner").innerHTML = " ";
+  clearScores();
   playerHand = [];
   dealerHand = [];
   iswinner = null;
