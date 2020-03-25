@@ -62,8 +62,6 @@ function hit() {
 
 //function if player is content with their hand
 function stay() {
-  console.log(dealerHand);
-  console.log(playerHand);
   dScore = calculateScore(dealerHand);
   pScore = calculateScore(playerHand);
 
@@ -80,7 +78,6 @@ function stay() {
   } else if (dScore === pScore) {
     iswinner = tie;
   }
-  console.log(iswinner);
   render();
   checkForWinner();
 }
