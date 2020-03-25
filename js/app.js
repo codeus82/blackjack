@@ -9,6 +9,7 @@ let dealerHand = [];
 let iswinner = null;
 let pScore = 0;
 let dScore = 0;
+
 // function startOfGame() {
 //   startGame();
 // }
@@ -37,37 +38,27 @@ function initialHand() {
 }
 
 //calculates the score
-function calculateScore() {
-  let pScore = 0;
-  let dScore = 0;
-  playerHand.forEach(function(card) {
-    pScore += card.value;
-    document.getElementById("player-score").innerHTML = "Score: " + pScore;
-    return pScore;
+function calculateScore(hand) {
+  let score = 0;
+  let aces = 0;
+  hand.forEach(function(card) {
+    score += card.value;
+    if (card.value === 11) {
+      aces++;
+    }
   });
-  dealerHand.forEach(function(card) {
-    dScore += card.value;
-    document.getElementById("dealer-score").innerHTML = dScore;
-    return dScore;
-  });
-  if (pScore > 21 && dScore <= 21) {
-    iswinner = dealer;
-  } else if (pScore <= 21 && dScore > 21) {
-    iswinner = player;
-  } else if (pScore === dScore) {
-    iswinner = tie;
-  } else if (pScore <= 21 && dScore <= 21 && pScore < dScore) {
-    iswinner = dealer;
-  } else if (pScore <= 21 && dScore <= 21 && pScore > dScore) {
-    iswinner = player;
+  while (score > 21 && aces) {
+    score -= 10;
+    aces--;
   }
+  return score;
 }
 
 //adds a card to the player's hand
 function hit() {
   playerHand.push(deck.pop());
   // render();
-  // calculateScore();
+  // calculateScore(player);
   // checkForWinner();
   render();
 }
@@ -92,30 +83,60 @@ function render() {
     let playerCards = `<div class="card ${card.face}"></div>`;
     document.getElementById("player-hand").innerHTML += playerCards;
   });
-  calculateScore();
+  calculateScore(dealerHand);
+  calculateScore(playerHand);
 }
 
 // checks for winner
 function checkForWinner() {
+  dScore = calculateScore(dealerHand);
+  pScore = calculateScore(playerHand);
+  document.getElementById("player-score").innerHTML = "Score: " + pScore;
+  document.getElementById("dealer-score").innerHTML = "Score: " + dScore;
+  if (pScore > 21 && dScore <= 21) {
+    iswinner = dealer;
+  } else if (pScore <= 21 && dScore > 21) {
+    iswinner = player;
+  } else if (pScore === dScore) {
+    iswinner = tie;
+  } else if (pScore <= 21 && dScore <= 21 && pScore < dScore) {
+    iswinner = dealer;
+  } else if (pScore <= 21 && dScore <= 21 && pScore > dScore) {
+    iswinner = player;
+  }
   if (iswinner !== null) {
     if (iswinner == player) {
       document.getElementById("winner").innerHTML = "Congrats! You won.";
+      iswinner = null;
     } else if (iswinner == dealer) {
       document.getElementById("winner").innerHTML = "Sorry, you lost :(";
+      iswinner = null;
     } else if (iswinner == bust) {
       document.getElementById("winner").innerHTML = "You both busted";
+      iswinner = null;
     } else {
       document.getElementById("winner").innerHTML = "It's a tie!";
+      iswinner = null;
     }
   }
-  hide();
+  //hide();
   showResetBtn();
+}
+
+//clea
+function clearText() {
+  document.getElementById("winner").innerHTML = "";
 }
 
 //styles the button to be hidden when there is a winner
 function hide() {
   document.getElementById("hit").style.visibility = "hidden";
   document.getElementById("stay").style.visibility = "hidden";
+}
+
+function showBtns() {
+  document.getElementById("hit").style.visibility = "visible";
+  document.getElementById("stay").style.visibility = "visible";
 }
 
 //styles reset button to be hidden when the game is on.
@@ -129,10 +150,16 @@ function showResetBtn() {
 }
 
 function startGame() {
+  iswinner = null;
+  playerHand = [];
+  dealerHand = [];
+
+  showBtns();
   hideResetBtn();
   initialHand();
   render();
-  calculateScore();
+  calculateScore(dealerHand);
+  calculateScore(playerHand);
   //checkForWinner();
 }
 
@@ -152,8 +179,6 @@ stayButton.addEventListener("click", function(e) {
 
 let resetButton = document.getElementById("reset");
 resetButton.addEventListener("click", function(e) {
-  let playerHand = [];
-  let dealerHand = [];
-  let iswinner = null;
+  clearText();
   startGame();
 });
