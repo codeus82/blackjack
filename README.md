@@ -12,6 +12,12 @@ Blackjack is a 2 player game that involves getting to the value 21 as close as p
 
 ---
 
+## Getting Started
+
+Link to play: https://preintercede.github.io/blackjack/
+
+---
+
 ## Images
 
 ![Game Start](https://i.imgur.com/g4WsMTP.png)
