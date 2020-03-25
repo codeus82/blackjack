@@ -20,7 +20,6 @@ Blackjack is a 2 player game that involves getting to the value 21 as close as p
 
 ## Next Steps
 
-- Letting the player choose 1 or 11 points for the A card.
 - Cleaner board via CSS
 - Betting System
 - Double down
