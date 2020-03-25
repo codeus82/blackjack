@@ -58,6 +58,7 @@ function hit() {
     checkForWinner();
   }
   render();
+  document.getElementById("player-score").innerHTML = "Score: " + pScore;
 }
 
 //function if player is content with their hand
