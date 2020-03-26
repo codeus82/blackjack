@@ -106,16 +106,15 @@ function checkForWinner() {
       document.getElementById("winner").innerHTML = "Congrats! You won.";
     } else if (iswinner == dealer) {
       document.getElementById("winner").innerHTML = "Sorry, you lost :(";
+    } else if (iswinner == tie) {
+      document.getElementById("winner").innerHTML = "It's a tie!";
     }
-  } else if (iswinner == tie) {
-    document.getElementById("winner").innerHTML = "It's a tie!";
+    document.getElementById("player-score").innerHTML = "Score: " + pScore;
+    document.getElementById("dealer-score").innerHTML = "Score: " + dScore;
+    hide();
+    showResetBtn();
   }
-  document.getElementById("player-score").innerHTML = "Score: " + pScore;
-  document.getElementById("dealer-score").innerHTML = "Score: " + dScore;
-  hide();
-  showResetBtn();
 }
-
 //styles the button to be hidden when there is a winner
 function hide() {
   document.getElementById("hit").style.visibility = "hidden";
