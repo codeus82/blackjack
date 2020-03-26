@@ -9,6 +9,15 @@ let iswinner = null;
 let pScore = 0;
 let dScore = 0;
 
+const dealerScoreID = document.getElementById("dealer-score");
+const playerScoreID = document.getElementById("player-score");
+const dealerHandID = document.getElementById("dealer-hand");
+const playerHandID = document.getElementById("player-hand");
+const winnerID = document.getElementById("winner");
+const hitID = document.getElementById("hit");
+const stayID = document.getElementById("stay");
+const resetID = document.getElementById("reset");
+
 //Fisher-Yate's algorithm
 function shuffle(deck) {
   let i = 0,
@@ -58,7 +67,7 @@ function hit() {
     checkForWinner();
   }
   render();
-  document.getElementById("player-score").innerHTML = "Score: " + pScore;
+  playerScoreID.innerHTML = "Score: " + pScore;
 }
 
 //function if player is content with their hand
@@ -85,17 +94,17 @@ function stay() {
 
 //renders cards
 function render() {
-  document.getElementById("dealer-hand").innerHTML = "";
+  dealerHandID.innerHTML = "";
   dealerHand.forEach((card, idx) => {
     let dealerCards = `<div class="card ${
       idx === 1 && !iswinner ? "back" : card.face
     }"></div>`;
-    document.getElementById("dealer-hand").innerHTML += dealerCards;
+    dealerHandID.innerHTML += dealerCards;
   });
-  document.getElementById("player-hand").innerHTML = "";
+  playerHandID.innerHTML = "";
   playerHand.forEach(card => {
     let playerCards = `<div class="card ${card.face}"></div>`;
-    document.getElementById("player-hand").innerHTML += playerCards;
+    playerHandID.innerHTML += playerCards;
   });
 }
 
@@ -103,44 +112,45 @@ function render() {
 function checkForWinner() {
   if (iswinner !== null) {
     if (iswinner == player) {
-      document.getElementById("winner").innerHTML = "Congrats! You won.";
+      winnerID.innerHTML = "Congrats! You won.";
     } else if (iswinner == dealer) {
-      document.getElementById("winner").innerHTML = "Sorry, you lost :(";
+      winnerID.innerHTML = "Sorry, you lost :(";
     } else if (iswinner == tie) {
-      document.getElementById("winner").innerHTML = "It's a tie!";
+      winnerID.innerHTML = "It's a tie!";
     }
-    document.getElementById("player-score").innerHTML = "Score: " + pScore;
-    document.getElementById("dealer-score").innerHTML = "Score: " + dScore;
+    playerScoreID.innerHTML = "Score: " + pScore;
+    dealerScoreID.innerHTML = "Score: " + dScore;
     hide();
     showResetBtn();
   }
 }
+
 //styles the button to be hidden when there is a winner
 function hide() {
-  document.getElementById("hit").style.visibility = "hidden";
-  document.getElementById("stay").style.visibility = "hidden";
+  hitID.style.visibility = "hidden";
+  stayID.style.visibility = "hidden";
 }
 
 //styles reset button to be hidden when the game is on.
 function hideResetBtn() {
-  document.getElementById("reset").style.visibility = "hidden";
+  resetID.style.visibility = "hidden";
 }
 
 //styles reset button to show when winner is found.
 function showResetBtn() {
-  document.getElementById("reset").style.visibility = "visible";
+  resetID.style.visibility = "visible";
 }
 
 //shows hit and stay buttons once player hits reset
 function showBtns() {
-  document.getElementById("hit").style.visibility = "visible";
-  document.getElementById("stay").style.visibility = "visible";
+  hitID.style.visibility = "visible";
+  stayID.style.visibility = "visible";
 }
 
 //clears the scores of the previous game if player hit reset button
 function clearScores() {
-  document.getElementById("dealer-score").innerHTML = "Score:";
-  document.getElementById("player-score").innerHTML = "Score:";
+  dealerScoreID.innerHTML = "Score:";
+  playerScoreID.innerHTML = "Score:";
 }
 
 function startGame() {
@@ -168,7 +178,7 @@ stayButton.addEventListener("click", function(e) {
 
 let resetButton = document.getElementById("reset");
 resetButton.addEventListener("click", function(e) {
-  document.getElementById("winner").innerHTML = " ";
+  winnerID.innerHTML = " ";
   clearScores();
   playerHand = [];
   dealerHand = [];

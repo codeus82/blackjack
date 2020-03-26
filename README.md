@@ -26,6 +26,7 @@ Link to play: https://preintercede.github.io/blackjack/
 
 ## Next Steps
 
+- Modal window on website load
 - Cleaner board via CSS
 - Betting System
 - Double down
